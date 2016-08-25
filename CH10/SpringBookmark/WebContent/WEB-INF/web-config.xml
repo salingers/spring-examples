@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans 
+  http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+  
+    <bean id="urlMapping"
+          class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="/login.do">loginController</prop>
+                <prop key="/register.do">registerController</prop>
+                <prop key="/member.do">memberController</prop>
+                <prop key="/forgot.do">forgotController</prop>
+            </props>
+        </property>
+    </bean>
+   
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass"
+            value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <bean id="loginController"
+                class="onlyfun.caterpillar.web.LoginController">
+        <property name="userDAO" ref="userDAO"/>
+        <property name="successView" value="login_success"/>
+        <property name="formView" value="login"/>
+    </bean>
+    
+    <bean id="registerValidator" 
+          class="onlyfun.caterpillar.web.RegisterValidator"/> 
+    
+    <bean id="registerController"
+          class="onlyfun.caterpillar.web.RegisterController">               
+        <property name="validator" ref="registerValidator"/>
+        <property name="userDAO" ref="userDAO"/>
+        <property name="successView" value="register_success"/>
+        <property name="formView" value="register"/>
+    </bean>
+
+    <bean id="paraMethodResolver" 
+        class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver"> 
+        <property name="paramName" value="action"/>
+        <property name="defaultMethodName" value="displayUrl"/>
+    </bean> 
+        
+    <bean id="memberController"
+          class="onlyfun.caterpillar.web.MemberController">
+        <property name="methodNameResolver" ref="paraMethodResolver"/> 
+        <property name="bookmarkDAO" ref="bookmarkDAO"/>
+        <property name="userDAO" ref="userDAO"/>
+        <property name="memberPage" value="member"/>
+        <property name="addBmPage" value="addbm"/>
+        <property name="passwdPage" value="change_passwd"/>
+        <property name="redirectPage" value="/SpringBookmark/login.do"/>
+    </bean>
+
+    <bean id="forgotController"
+          class="onlyfun.caterpillar.web.ForgotController">       
+        <property name="userDAO" ref="userDAO"/>
+        <property name="simpleMail" ref="simpleMail"/>
+        <property name="loginPage" value="login"/>
+        <property name="forgotPage" value="forgot"/>
+    </bean>       
+</beans>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans 
+  http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+  
+    <bean id="configBean" 
+          class="org.springframework.beans.factory.config.CustomEditorConfigurer"> 
+        <property name="customEditors">
+            <map>
+                <entry key="onlyfun.caterpillar.User">
+                    <bean id="userEditor" 
+                           class="onlyfun.caterpillar.UserEditor"/>
+                </entry>
+            </map>   
+        </property>
+    </bean> 
+    
+    <bean id="helloBean" 
+          class="onlyfun.caterpillar.HelloBean"> 
+        <property name="helloWord" value="Hello"/> 
+        <property name="user" value="Justin,5858588"/> 
+    </bean>
+    
+</beans>

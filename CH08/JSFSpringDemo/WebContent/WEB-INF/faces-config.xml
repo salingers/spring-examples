@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE faces-config PUBLIC
+ "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
+ "http://java.sun.com/dtd/web-facesconfig_1_0.dtd">
+
+<faces-config>
+    <application>
+        <variable-resolver>
+            org.springframework.web.jsf.DelegatingVariableResolver
+        </variable-resolver>
+    </application>
+    <navigation-rule>
+        <from-view-id>/pages/index.jsp</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/pages/welcome.jsp</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+       
+    <managed-bean>
+        <managed-bean-name>user</managed-bean-name>
+         <managed-bean-class>
+             onlyfun.caterpillar.User
+         </managed-bean-class>
+         <managed-bean-scope>session</managed-bean-scope>
+         <managed-property>
+             <property-name>userChanger</property-name>
+             <value>#{userChanger}</value>
+         </managed-property>         
+    </managed-bean>
+</faces-config>

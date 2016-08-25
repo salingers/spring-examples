@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:aop="http://www.springframework.org/schema/aop"
+  xmlns:tx="http://www.springframework.org/schema/tx"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans 
+  http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+  http://www.springframework.org/schema/aop 
+  http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+  http://www.springframework.org/schema/tx 
+  http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+  
+    <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+        <property name="driverClassName" 
+                  value="com.mysql.jdbc.Driver"/>
+        <property name="url"
+                  value="jdbc:mysql://localhost:3306/demo"/> 
+        <property name="username" value="root"/> 
+        <property name="password" value="123456"/> 
+    </bean> 
+    
+    <bean id="sessionFactory"  
+          class="org.springframework.orm.hibernate3.LocalSessionFactoryBean" 
+          destroy-method="close"> 
+        <property name="dataSource" ref="dataSource"/> 
+        <property name="mappingResources"> 
+            <list> 
+                <value>onlyfun/caterpillar/User.hbm.xml</value> 
+            </list> 
+        </property> 
+        <property name="hibernateProperties"> 
+            <props> 
+                <prop key="hibernate.dialect"> 
+                    org.hibernate.dialect.MySQLDialect
+                </prop> 
+            </props> 
+        </property> 
+    </bean> 
+
+    <bean id="userDAO" class="onlyfun.caterpillar.UserDAO"> 
+        <property name="sessionFactory" ref="sessionFactory"/> 
+    </bean>
+    
+    <bean id="transactionManager" 
+          class="org.springframework.orm.hibernate3.HibernateTransactionManager"> 
+        <property name="sessionFactory" ref="sessionFactory"/> 
+    </bean>     
+
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="insert" propagation="REQUIRED"/>
+            <tx:method name="find" read-only="true"/>
+       </tx:attributes>
+    </tx:advice>
+  
+    <aop:config>
+        <aop:pointcut id="userDAOPointcut" expression="execution(* onlyfun.caterpillar.IUserDAO.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="userDAOPointcut"/>
+    </aop:config>
+            
+</beans>

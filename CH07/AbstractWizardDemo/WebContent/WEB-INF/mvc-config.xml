@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans 
+  http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <bean id="urlMapping" 
+          class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping"> 
+        <property name="mappings"> 
+            <props> 
+                <prop key="/wizard.do">wizardController</prop> 
+            </props> 
+        </property> 
+    </bean> 
+    
+    <bean id="viewResolver" 
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver"> 
+        <property name="prefix" value="/WEB-INF/jsp/"/> 
+        <property name="suffix" value=".jsp"/> 
+    </bean> 
+
+   <bean id="wizardController" 
+          class="onlyfun.caterpillar.WizardController"> 
+        <property name="successView" value="success"/> 
+        <property name="pages"> 
+            <list>
+                <value>start</value>
+                <value>question1</value>
+                <value>question2</value>
+                <value>question3</value>
+            </list>
+        </property>         
+    </bean> 
+
+</beans>

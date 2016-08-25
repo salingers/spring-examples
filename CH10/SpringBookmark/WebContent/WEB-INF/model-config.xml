@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans 
+  http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+  
+    <!-- 要設定您的資料庫相關訊息 -->
+    <bean id="dataSource" 
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+        <property name="driverClassName"
+                  value="com.mysql.jdbc.Driver"/> 
+        <property name="url"
+            value="jdbc:mysql://localhost:3306/bookmarks"/> 
+        <property name="username" value="your_db_username"/> 
+        <property name="password" value="your_db_password"/> 
+    </bean> 
+    
+    <bean id="sessionFactory" 
+          class="org.springframework.orm.hibernate3.LocalSessionFactoryBean" 
+          destroy-method="destroy"> 
+        <property name="dataSource" ref="dataSource"/> 
+        <property name="mappingResources"> 
+            <list> 
+                <value>onlyfun/caterpillar/model/User.hbm.xml</value> 
+                <value>onlyfun/caterpillar/model/Bookmark.hbm.xml</value> 
+            </list> 
+        </property> 
+        <property name="hibernateProperties"> 
+            <props> 
+                <prop key="hibernate.dialect"> 
+                    org.hibernate.dialect.MySQLDialect 
+                </prop> 
+            </props> 
+        </property> 
+    </bean> 
+
+    <bean id="hibernateTemplate"
+          class="org.springframework.orm.hibernate3.HibernateTemplate">
+        <property name="sessionFactory" ref="sessionFactory"/> 
+    </bean>    
+         
+    <bean id="userDAO"
+           class="onlyfun.caterpillar.model.UserDAO">
+        <property name="hibernateTemplate" ref="hibernateTemplate"/> 
+    </bean>
+
+    <bean id="bookmarkDAO"
+           class="onlyfun.caterpillar.model.BookmarkDAO">
+        <property name="hibernateTemplate" ref="hibernateTemplate"/> 
+     </bean>
+     
+     <!-- 要設定您的 Smtp Server 與寄件人 -->
+     <bean id="simpleMail"
+           class="onlyfun.caterpillar.model.SimpleMail">
+        <property name="smtpHost" value="your_smtp_server"/> 
+        <property name="from" value="your_admin_address"/> 
+    </bean>
+</beans>

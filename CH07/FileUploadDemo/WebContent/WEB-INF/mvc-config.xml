@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans 
+  http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <bean id="urlMapping"
+          class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="/index.do">indexController</prop>
+                <prop key="/upload.do">uploadController</prop>
+            </props>
+        </property>
+    </bean> 
+    
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver">    
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <bean id="indexController"
+           class="org.springframework.web.servlet.mvc.ParameterizableViewController">
+        <property name="viewName" value="index"/>
+    </bean>    
+
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="1000000"/>
+    </bean>    
+        
+    <bean id="uploadController" 
+          class="onlyfun.caterpillar.UploadController"> 
+        <property name="formView" value="form"/> 
+        <property name="successView" value="success"/> 
+        <property name="path" value="c:\\upload"/> 
+    </bean>
+
+</beans>

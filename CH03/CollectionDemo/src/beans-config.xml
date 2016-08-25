@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans 
+  http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+  
+    <bean id="some1" class="onlyfun.caterpillar.Some">
+        <property name="name" value="Justin"/>
+    </bean>
+    
+    <bean id="some2" class="onlyfun.caterpillar.Some">
+        <property name="name" value="momor"/>
+    </bean>
+    
+    <bean id="someBean" class="onlyfun.caterpillar.SomeBean">
+        <property name="someStrArray">
+            <list>
+                <value>Hello</value>
+                <value>Welcome</value>
+            </list>
+        </property>
+        
+        <property name="someObjArray">
+            <list>
+                 <ref bean="some1"/>
+                 <ref bean="some2"/>
+            </list>
+        </property>
+        
+        <property name="someList">
+            <list>
+                 <value>ListTest</value>
+                 <ref bean="some1"/>
+                 <ref bean="some2"/>
+            </list>
+        </property>
+        
+        <property name="someMap">
+            <map>
+                 <entry key="MapTest">
+                     <value>Hello!Justin!</value>
+                 </entry>
+                 <entry key="someKey1">
+                     <ref bean="some1"/>
+                 </entry>
+            </map>
+        </property>
+    </bean> 
+
+</beans>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC 
+ "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN" 
+ "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd"> 
+ 
+<tiles-definitions> 
+    <definition name=".myLayout"
+                  path="/WEB-INF/jsp/tiles/myLayout.jsp"> 
+      <put name="title" value="Sample Page Title"/> 
+      <put name="header" value="/WEB-INF/jsp/tiles/header.jsp"/> 
+      <put name="menu" value="/WEB-INF/jsp/tiles/menu.jsp"/> 
+      <put name="footer" value="/WEB-INF/jsp/tiles/footer.jsp"/> 
+      <put name="body" value="/WEB-INF/jsp/tiles/body.jsp"/> 
+    </definition> 
+
+    <definition name="welcome" extends=".myLayout">
+      <put name="title" value="Tiles 測試頁面"/>
+    </definition>
+</tiles-definitions> 

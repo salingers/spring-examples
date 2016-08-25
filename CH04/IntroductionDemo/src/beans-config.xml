@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans 
+  http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+  
+    <bean id="some" 
+          class="onlyfun.caterpillar.Some"/> 
+
+    <bean id="otherIntroduction" 
+          class="onlyfun.caterpillar.OtherIntroduction"/> 
+          
+    <bean id="otherAdvisor" 
+          class="org.springframework.aop.support.DefaultIntroductionAdvisor"> 
+          <constructor-arg ref="otherIntroduction"/>
+          <constructor-arg value="onlyfun.caterpillar.IOther"/>
+    </bean>
+   
+    <bean id="proxyFactoryBean" 
+          class="org.springframework.aop.framework.ProxyFactoryBean"> 
+        <property name="proxyInterfaces" 
+                  value="onlyfun.caterpillar.ISome"/> 
+        <property name="target" ref="some"/> 
+        <property name="interceptorNames"> 
+            <list> 
+                <value>otherAdvisor</value> 
+            </list> 
+        </property> 
+    </bean> 
+    
+</beans>

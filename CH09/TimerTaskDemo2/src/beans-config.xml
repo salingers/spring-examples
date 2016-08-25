@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans 
+  http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+  
+    <bean id="demoTask" class="onlyfun.caterpillar.DemoTask"/>
+
+    <bean id="timerTaskBean" 
+          class="org.springframework.scheduling.timer.MethodInvokingTimerTaskFactoryBean">
+        <property name="targetObject" ref="demoTask"/>
+        <property name="targetMethod" value="execute"/>
+    </bean>
+        
+    <bean id="scheduledTimerTask" 
+          class="org.springframework.scheduling.timer.ScheduledTimerTask">
+        <property name="timerTask" ref="timerTaskBean"/>
+        <property name="period" value="5000"/>
+        <property name="delay" value="1000"/>
+    </bean>
+    
+    <bean id="timerFactoryBean" 
+          class="org.springframework.scheduling.timer.TimerFactoryBean">
+        <property name="scheduledTimerTasks">
+            <list>
+                <ref bean="scheduledTimerTask"/>
+            </list>
+        </property>
+    </bean>
+    
+</beans>
